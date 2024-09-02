@@ -67,16 +67,8 @@ def _1_init():
         # CURTOTP may need decoding if it was base32-encoded
         cur_totp_secret = os.environ['CURTOTP']
         print(f"{cur_user} - {cur_pass} - {cur_totp_secret}")
-        try:
-            cur_totp_secret += '=' * (-len(cur_totp_secret) % 8)  # Adjust padding if necessary
-            cur_totp_secret = base64.b32decode(cur_totp_secret, casefold=True)
-        except binascii.Error:
-            print("TOTP secret decoding failed, using the raw value.")
-            cur_totp_secret = cur_totp_secret.encode()  # Use raw value
-
         # Generate TOTP
         totp = pyotp.TOTP(cur_totp_secret).now()
-
         # Attempt login
         print(f"Attempting login with {cur_user} and generated TOTP.")
         login_response = rs.robinhood.authentication.login(cur_user, cur_pass, mfa_code=totp)
