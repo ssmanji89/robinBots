@@ -56,26 +56,28 @@ import os
 import base64
 import binascii
 
-def decode_base32(encoded_str):
-    try:
-        encoded_str += '=' * (-len(encoded_str) % 8)
-        return base64.b32decode(encoded_str, casefold=True).decode('utf-8')
-    except binascii.Error as e:
-        print(f"Decoding failed for {encoded_str}: {e}")
-        return None
-
 def _1_init():
-    cur_user = decode_base32(os.environ['CURUSER'])
-    cur_pass = decode_base32(os.environ['CURPASS'])
-    cur_totp_secret = decode_base32(os.environ['CURTOTP'])
-
-    if not cur_user or not cur_pass or not cur_totp_secret:
-        print("Failed to decode one or more required environment variables.")
-        return
-
     try:
+        # CURUSER is an email, so use it directly
+        cur_user = os.environ['CURUSER']
+
+        # CURPASS is a password, so use it directly
+        cur_pass = os.environ['CURPASS']
+
+        # CURTOTP may need decoding if it was base32-encoded
+        cur_totp_secret = os.environ['CURTOTP']
+        try:
+            cur_totp_secret += '=' * (-len(cur_totp_secret) % 8)  # Adjust padding if necessary
+            cur_totp_secret = base64.b32decode(cur_totp_secret, casefold=True)
+        except binascii.Error:
+            print("TOTP secret decoding failed, using the raw value.")
+            cur_totp_secret = cur_totp_secret.encode()  # Use raw value
+
+        # Generate TOTP
         totp = pyotp.TOTP(cur_totp_secret).now()
-        print(f"{cur_user} / {totp}")
+
+        # Attempt login
+        print(f"Attempting login with {cur_user} and generated TOTP.")
         login_response = rs.robinhood.authentication.login(cur_user, cur_pass, mfa_code=totp)
         print(login_response)
 
@@ -83,11 +85,16 @@ def _1_init():
             print("Login failed.")
             return
 
+        # If login is successful, proceed with further actions
+        initial_df = pd.DataFrame(rs.robinhood.get_open_stock_positions())
+        print(initial_df)
+
+    except KeyError as e:
+        print(f"Environment variable {e} is missing.")
     except Exception as e:
-        print(f"An error occurred during login: {e}")
-        return
+        print(f"An error occurred: {e}")
 
-
+    return
 
 def cancel_all_stockOrders(): logon=_1_init(); return print(rs.robinhood.cancel_all_stock_orders())
 
