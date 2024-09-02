@@ -4,8 +4,6 @@ FROM python:3.11
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the .env file into the container
-COPY .env .env
 
 # Install required Python packages from requirements.txt
 COPY requirements.txt .
