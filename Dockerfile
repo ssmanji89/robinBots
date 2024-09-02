@@ -8,7 +8,7 @@ WORKDIR /app
 COPY .env .env
 
 # Install required Python packages from requirements.txt
-COPY /docker/requirements.txt .
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # Modify the pandas_ta package as specified

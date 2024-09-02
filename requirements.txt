@@ -1,4 +1,17 @@
-pytest==6.2.5
-python-dotenv==0.19.0
-# Add other dependencies as needed
-
+apscheduler
+ccxt
+config
+flask
+numpy==2.0.2
+openai
+pandas
+pandas-ta
+pendulum
+pyotp
+pytz
+requests
+robin-stocks
+scikit-learn
+scipy
+textblob
+yfinance
