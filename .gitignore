@@ -41,4 +41,5 @@ Thumbs.db
 *.log
 *.sqlite3
 .env
-
+.js
+*.js

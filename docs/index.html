@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="js/stripe_checkout.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - robinBots</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -21,7 +23,6 @@
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="features.html">Features</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
                     <li class="nav-item"><a class="nav-link" href="https://github.com/ssmanji89/robinBots/issues">Support</a></li>
                     <li class="nav-item"><a class="nav-link" href="https://github.com/ssmanji89/robinBots">GitHub</a></li>
                     <li class="nav-item"><a class="nav-link" href="https://ssmanji89.github.io">Developer</a></li>
@@ -31,59 +32,95 @@
     </nav>
 
     <main class="container">
-<div class="jumbotron">
-    <h1 class="display-4">Welcome to robinBots</h1>
-    <p class="lead">Automate your trading with advanced AI and machine learning algorithms.</p>
-    <hr class="my-4">
-    <p>robinBots connects to your Robinhood account and executes trades based on sophisticated analysis and risk management strategies.</p>
-    <a class="btn btn-primary btn-lg" href="#subscribe" role="button">Subscribe Now</a>
-    <a class="btn btn-secondary btn-lg" href="features.html" role="button">Learn More</a>
-</div>
-
-<div class="row mt-5">
-    <div class="col-md-4">
-        <h2>Smart Trading</h2>
-        <p>Our AI algorithms analyze market trends and execute trades at optimal times.</p>
-    </div>
-    <div class="col-md-4">
-        <h2>Risk Management</h2>
-        <p>Advanced risk management techniques protect your investments.</p>
-    </div>
-    <div class="col-md-4">
-        <h2>Easy Setup</h2>
-        <p>Connect your Robinhood account and start automated trading in minutes.</p>
-    </div>
-</div>
-
-<div id="subscribe" class="mt-5">
-    <h2>Subscribe Now</h2>
-    <p>Ready to start your journey with robinBots? Choose your plan and get started today!</p>
-    <form action="https://github.com/yourusername/robinBots/issues/new" method="get" target="_blank">
-        <input type="hidden" name="title" value="New Subscription Request">
-        <input type="hidden" name="labels" value="subscription">
-        <div class="mb-3">
-            <label for="plan" class="form-label">Select your plan:</label>
-            <select class="form-select" id="plan" name="body" required>
-                <option value="">Choose a plan...</option>
-                <option value="Basic Plan Subscription Request">Basic (9/mo)</option>
-                <option value="Pro Plan Subscription Request">Pro (9/mo)</option>
-                <option value="Enterprise Plan Subscription Request">Enterprise (99/mo)</option>
-            </select>
+        <div class="jumbotron card mb-4 rounded-3 shadow-sm">
+            <h1 class="display-4">Welcome to robin<b>Bots</b></h1>
+            <p class="lead">robinBots connects to your Robinhood account and executes trades based on sophisticated analysis and risk management strategies.</p>
         </div>
-        <button type="submit" class="btn btn-primary">Subscribe</button>
-    </form>
-</div>
 
-    </main>
-
-    <footer class="footer mt-auto py-3 bg-light">
-        <div class="container text-center">
-            <span class="text-muted">© 2023 robinBots. All rights reserved. | </span>
-            <a href="https://github.com/yourusername/robinBots">GitHub Project</a> | 
-            <a href="https://yourusername.github.io">Developer's Homepage</a>
-        </div>
-    </footer>
+        <main class="container">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Our advanced machine learning algorithms analyze vast amounts of market data, technical indicators, and historical patterns to identify optimal trading opportunities for your open positions.</p>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h3>Scheduled Trading</h3>
+                    <p>robinBots executes trades on your open positions based on a predetermined schedule, ensuring consistent and timely trading actions without the need for constant monitoring.</p>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h3>Dynamic Risk Management</h3>
+                    <p>Implement adaptive stop-loss orders, smart position sizing, and portfolio balancing to effectively manage risk and protect your investments in changing market conditions.</p>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h3>Performance Tracking</h3>
+                    <p>Monitor your trading performance with detailed analytics and reports, including profit/loss metrics, trade history, and strategy effectiveness over time.</p>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h3>Robinhood Integration</h3>
+                    <p>Seamlessly connect to your Robinhood account with bank-level encryption, allowing robinBots to execute trades on your behalf while maintaining the security of your personal information.</p>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h3>Continuous Learning</h3>
+                    <p>Our AI models continuously learn and adapt to market changes, improving trading strategies over time to maintain effectiveness in various market conditions.</p>
+                </div>
+            </div>
+    
+    
+            <div id="subscribe" class="mt-5">
+                <h2>Subscribe to robinBots</h2>
+                <p>Ready to start your journey with robinBots? Subscribe now and let our AI trade your open positions on a set schedule.</p>
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">$33.33<small class="text-muted fw-light">/mo</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>AI-powered trading of open positions</li>
+                            <li>Market Driven execution for automated trades batching</li>
+                            <li>Real-time risk management</li>
+                            <li><a href="https://github.com/ssmanji89/robinBots/issues">24/7 GitHub issue support</a></li>
+                        </ul>
+                        <button id="checkout-button" class="w-100 btn btn-lg btn-primary">Subscribe Now</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    
+        <footer class="footer mt-auto py-3 bg-light">
+            <div class="container text-center">
+                <span class="text-muted">© 2023 <a href="https://github.com/ssmanji89/robinBots">robinBots</a>. All rights reserved.</span>
+                
+            </div>
+        </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var stripe = Stripe('pk_live_51PuSMQP7HsCzcZI7ErFEKBfWPYRrJbn84AaIR67K1AxgY33WZolI3lgvEbSKABIJgAduBilAeQpfM2EeA1Rlc0Ga00E0MDeTBs');
+        var checkoutButton = document.getElementById('checkout-button');
+
+        checkoutButton.addEventListener('click', function() {
+            fetch('/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    priceId: 'prod_QmDLDguCrUuEtm',
+                })
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(session) {
+                return stripe.redirectToCheckout({ sessionId: session.id });
+            })
+            .then(function(result) {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+            });
+        });
+    </script>
 </body>
 </html>
