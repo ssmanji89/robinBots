@@ -52,40 +52,41 @@ import binascii
 
 WATCHLIST_NAMES = ["2024GPTd","AWP","100 Most Popular","Daily Movers","Upcoming Earnings","Energy & Water"]
 
+import os
+import base64
+import binascii
+
+def decode_base32(encoded_str):
+    try:
+        encoded_str += '=' * (-len(encoded_str) % 8)
+        return base64.b32decode(encoded_str, casefold=True).decode('utf-8')
+    except binascii.Error as e:
+        print(f"Decoding failed for {encoded_str}: {e}")
+        return None
 
 def _1_init():
+    cur_user = decode_base32(os.environ['CURUSER'])
+    cur_pass = decode_base32(os.environ['CURPASS'])
+    cur_totp_secret = decode_base32(os.environ['CURTOTP'])
+
+    if not cur_user or not cur_pass or not cur_totp_secret:
+        print("Failed to decode one or more required environment variables.")
+        return
+
     try:
-        # Decode CURUSER with padding if necessary
-        cur_user_encoded = os.environ['CURUSER']
-        cur_user_encoded += '=' * (-len(cur_user_encoded) % 8)
-        cur_user = base64.b32decode(cur_user_encoded, casefold=True).decode('utf-8')
-
-        # Decode CURPASS
-        cur_pass_encoded = os.environ['CURPASS']
-        cur_pass_encoded += '=' * (-len(cur_pass_encoded) % 8)
-        cur_pass = base64.b32decode(cur_pass_encoded, casefold=True).decode('utf-8')
-
-        # Decode CURTOTP
-        cur_totp_secret_encoded = os.environ['CURTOTP']
-        cur_totp_secret_encoded += '=' * (-len(cur_totp_secret_encoded) % 8)
-        cur_totp_secret = base64.b32decode(cur_totp_secret_encoded, casefold=True)
-
-        # Generate TOTP
         totp = pyotp.TOTP(cur_totp_secret).now()
-
-        # Print and attempt login
         print(f"{cur_user} / {totp}")
         login_response = rs.robinhood.authentication.login(cur_user, cur_pass, mfa_code=totp)
         print(login_response)
 
-    except binascii.Error as e:
-        print(f"Decoding failed: {e}")
-    except KeyError as e:
-        print(f"Environment variable {e} is missing.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+        if not login_response.get('access_token'):
+            print("Login failed.")
+            return
 
-    return
+    except Exception as e:
+        print(f"An error occurred during login: {e}")
+        return
+
 
 
 def cancel_all_stockOrders(): logon=_1_init(); return print(rs.robinhood.cancel_all_stock_orders())
