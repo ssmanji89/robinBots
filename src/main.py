@@ -51,12 +51,7 @@ import binascii
 
 
 WATCHLIST_NAMES = ["2024GPTd","AWP","100 Most Popular","Daily Movers","Upcoming Earnings","Energy & Water"]
-import base64
-import os
-import base64
-import binascii
-import pyotp
-import rs.robinhood.authentication
+
 
 def _1_init():
     try:
