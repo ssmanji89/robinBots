@@ -45,11 +45,26 @@ pd.set_option('future.no_silent_downcasting', True)
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+import os
+import base64
+import binascii
+
 
 WATCHLIST_NAMES = ["2024GPTd","AWP","100 Most Popular","Daily Movers","Upcoming Earnings","Energy & Water"]
 import base64
 def _1_init():
-    cur_user=base64.b32decode(os.environ['CURUSER'], casefold=True) 
+    cur_user_encoded = os.environ['CURUSER']
+
+    # Add padding if necessary
+    missing_padding = len(cur_user_encoded) % 8
+    if missing_padding:
+        cur_user_encoded += '=' * (8 - missing_padding)
+
+    try:
+        cur_user = base64.b32decode(cur_user_encoded, casefold=True)
+        print(f"Decoded user: {cur_user}")
+    except binascii.Error as e:
+        print(f"Decoding failed: {e}")
     cur_pass=base64.b32decode(os.environ['CURPASS'], casefold=True)
     cur_totp_secret=base64.b32decode(os.environ['CURTOTP'], casefold=True)
     totp = pyotp.TOTP(cur_totp_secret).now()
