@@ -47,12 +47,12 @@ pd.set_option('future.no_silent_downcasting', True)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 WATCHLIST_NAMES = ["2024GPTd","AWP","100 Most Popular","Daily Movers","Upcoming Earnings","Energy & Water"]
-
+import base64
 def _1_init():
-    cur_user=os.environ['CURUSER']
-    cur_pass=os.environ['CURPASS']
+    cur_user=base64.b32decode(os.environ['CURUSER'], casefold=True)
+    cur_pass=base64.b32decode(os.environ['CURPASS'], casefold=True)
     cur_totp_secret=os.environ['CURTOTP']
-    totp = pyotp.TOTP(cur_totp_secret).now()
+    totp = pyotp.TOTP(base64.b32decode(cur_totp_secret, casefold=True)).now()
     print(f"{cur_user} / {totp}")
     print(rs.robinhood.authentication.login(cur_user, cur_pass, mfa_code=totp))
     return
