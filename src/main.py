@@ -70,7 +70,7 @@ def _1_init():
         # Generate TOTP
         totp = pyotp.TOTP(cur_totp_secret).now()
         # Attempt login
-        print(f"Attempting login with {cur_user} and generated TOTP.")
+        print(f"Attempting login with {cur_user} and generated TOTP ({totp}).")
         login_response = rs.robinhood.authentication.login(cur_user, cur_pass, mfa_code=totp)
         print(login_response)
 
