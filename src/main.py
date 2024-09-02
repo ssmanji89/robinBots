@@ -49,7 +49,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 WATCHLIST_NAMES = ["2024GPTd","AWP","100 Most Popular","Daily Movers","Upcoming Earnings","Energy & Water"]
 import base64
 def _1_init():
-    cur_user=base64.b32decode(os.environ['CURUSER'], casefold=True)
+    cur_user=base64.b32decode(os.environ['CURUSER'], casefold=True) 
     cur_pass=base64.b32decode(os.environ['CURPASS'], casefold=True)
     cur_totp_secret=base64.b32decode(os.environ['CURTOTP'], casefold=True)
     totp = pyotp.TOTP(cur_totp_secret).now()
