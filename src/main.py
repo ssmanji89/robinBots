@@ -66,6 +66,7 @@ def _1_init():
 
         # CURTOTP may need decoding if it was base32-encoded
         cur_totp_secret = os.environ['CURTOTP']
+        print(f"{cur_user} - {cur_pass} - {cur_totp_secret}")
         try:
             cur_totp_secret += '=' * (-len(cur_totp_secret) % 8)  # Adjust padding if necessary
             cur_totp_secret = base64.b32decode(cur_totp_secret, casefold=True)
