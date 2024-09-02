@@ -1,0 +1,17 @@
+apscheduler
+ccxt
+config
+flask
+numpy==2.0.2
+openai
+pandas
+pandas-ta
+pendulum
+pyotp
+pytz
+requests
+robin-stocks
+scikit-learn
+scipy
+textblob
+yfinance
