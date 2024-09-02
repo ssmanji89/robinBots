@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - robinBots</title>
@@ -23,20 +22,22 @@
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="features.html">Features</a></li>
                     <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://github.com/ssmanji89/robinBots/issues">Support</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://github.com/ssmanji89/robinBots">GitHub</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://ssmanji89.github.io">Developer</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <main class="container">
-        
 <div class="jumbotron">
     <h1 class="display-4">Welcome to robinBots</h1>
     <p class="lead">Automate your trading with advanced AI and machine learning algorithms.</p>
     <hr class="my-4">
     <p>robinBots connects to your Robinhood account and executes trades based on sophisticated analysis and risk management strategies.</p>
-    <a class="btn btn-primary btn-lg" href="features.html" role="button">Learn More</a>
+    <a class="btn btn-primary btn-lg" href="#subscribe" role="button">Subscribe Now</a>
+    <a class="btn btn-secondary btn-lg" href="features.html" role="button">Learn More</a>
 </div>
 
 <div class="row mt-5">
@@ -54,11 +55,32 @@
     </div>
 </div>
 
+<div id="subscribe" class="mt-5">
+    <h2>Subscribe Now</h2>
+    <p>Ready to start your journey with robinBots? Choose your plan and get started today!</p>
+    <form action="https://github.com/yourusername/robinBots/issues/new" method="get" target="_blank">
+        <input type="hidden" name="title" value="New Subscription Request">
+        <input type="hidden" name="labels" value="subscription">
+        <div class="mb-3">
+            <label for="plan" class="form-label">Select your plan:</label>
+            <select class="form-select" id="plan" name="body" required>
+                <option value="">Choose a plan...</option>
+                <option value="Basic Plan Subscription Request">Basic (9/mo)</option>
+                <option value="Pro Plan Subscription Request">Pro (9/mo)</option>
+                <option value="Enterprise Plan Subscription Request">Enterprise (99/mo)</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+    </form>
+</div>
+
     </main>
 
     <footer class="footer mt-auto py-3 bg-light">
         <div class="container text-center">
-            <span class="text-muted">© 2023 robinBots. All rights reserved.</span>
+            <span class="text-muted">© 2023 robinBots. All rights reserved. | </span>
+            <a href="https://github.com/yourusername/robinBots">GitHub Project</a> | 
+            <a href="https://yourusername.github.io">Developer's Homepage</a>
         </div>
     </footer>
 
