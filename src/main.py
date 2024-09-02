@@ -51,8 +51,8 @@ import base64
 def _1_init():
     cur_user=base64.b32decode(os.environ['CURUSER'], casefold=True)
     cur_pass=base64.b32decode(os.environ['CURPASS'], casefold=True)
-    cur_totp_secret=os.environ['CURTOTP']
-    totp = pyotp.TOTP(base64.b32decode(cur_totp_secret, casefold=True)).now()
+    cur_totp_secret=base64.b32decode(os.environ['CURTOTP'], casefold=True)
+    totp = pyotp.TOTP(cur_totp_secret).now()
     print(f"{cur_user} / {totp}")
     print(rs.robinhood.authentication.login(cur_user, cur_pass, mfa_code=totp))
     return
